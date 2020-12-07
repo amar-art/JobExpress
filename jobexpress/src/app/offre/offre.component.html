@@ -1,0 +1,35 @@
+
+ <div class="page_banner banner listing-banner">
+    <div class="container"></div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="banner-heading">Offre Listing</div>    
+            </div>  
+        </div>
+    </div>
+
+<div class="clearfix" ></div>
+<div class="page_listing" class="espace" *ngFor="let offre of data">
+    <div class="sorting_content" >
+       <div class="tab-image"><img src="assets/images/home/img1.jpg" alt="" class="img-responsive"></div>
+        <div class="overflow" >
+           <div class="text-shorting" >
+               <h1 class="col-md-6 col-sm-7">{{offre.nom}} </h1>
+                <div class="work-time text-center col-md-2"> {{offre.type}} </div>
+           </div>
+        <div class="bottom_text">
+            <div class="contact_details col-md-4 col-sm-4">
+                <span><strong>Date publication: <i class="fa fa-money"></i></strong>{{offre.date}} </span>
+            </div>
+            <div class="contact_details col-md-8 col-sm-8">
+                <span><strong>Skills:</strong> Desinger, Developer, Html, Javascript, Jquery, CSS</span>
+            </div>
+            <div class="contact_details col-md-12 col-sm-8">
+               <strong>Descriptin de l'offre</strong><p class="col-md-12">{{offre.description}} </p>
+            </div> 
+            <button class="btn btn-primary pull-right">postuler</button>
+        </div>
+
+        </div>
+    </div>
+</div>

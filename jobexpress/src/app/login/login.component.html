@@ -1,0 +1,121 @@
+<main id="maincontent">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="page-tab">
+                    <div id="form">
+                        <div id="userform">
+                            <ul class="nav nav-tabs nav-justified" role="tablist">
+                                <li class="active border-right"><a href="#login"  role="tab" data-toggle="tab">Log in</a></li>
+                                <li><a href="#signup" role="tab" data-toggle="tab">Sign up</a></li>
+                            </ul>
+                            <div class="tab-content">
+                            <div class="tab-pane fade active in" id="login">
+                               
+                                <form id="login" [formGroup]="registerForm" >
+                                    <div class="form-group">
+                                        <label> login or E-mail</label>
+                                        <input type="login" class="form-control" 
+                                        name="login" formControlName="login" class="form-control" [ngClass]="{ 'is-invalid': submitted && g.login.errors }">
+                                        <div *ngIf="submitted && g.login.errors"  style="color: red;" class="invalid-feedback">
+                                          <div *ngIf="g.login.errors.required">loginis required</div>
+                                      </div>
+                                        <div class="search_icon"><span class="ti-user"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Password</label>
+                                        <input type="password" class="form-control" id="password" 
+                                                                                            formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && g.password.errors }">
+                                                    <div *ngIf="submitted && g.password.errors"  style="color: red;" class="invalid-feedback" >
+                                                        <div *ngIf="g.password.errors.required">Password is required</div>
+                                                        <div *ngIf="g.password.errors.minlength">Password must be at least 6 characters</div>
+                                                    </div>
+                                           <div class="search_icon"><span class="ti-pin"></span></div>
+                                    </div>
+                                    <div class="mrgn-30-top">
+                                        <button type="submit"  (click)="login()"   class="btn btn-larger btn-block">Log in</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade " id="signup">
+                               
+                                <form id="signup" [formGroup]="candidatForm"  (ngSubmit)='
+                                addCandiat()'>
+                                    
+                                    <div class="form-group">
+                                        <label>Nom</label>
+                                        <input type="text" class="form-control" formControlName="nom" id="first_name" autocomplete="off">
+                                        <div class="search_icon"><span class="ti-user"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Prenom</label>
+                                        <input type="text" class="form-control" formControlName="prenom" id="last_name" autocomplete="off">
+                                        <div class="search_icon"><span class="ti-user"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Nom utilisateur </label>
+                                        <input type="text" class="form-control" formControlName="username" id="username"  autocomplete="off">
+                                        <div class="search_icon"><span class="ti-login"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>  E-mail</label>
+                                        <input type="email" class="form-control" 
+                                        name="email1" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                                        <div *ngIf="submitted && f.email.errors"  style="color: red;" class="invalid-feedback">
+                                          <div *ngIf="f.email.errors.required">email required</div>
+                                      </div>
+                                        <div class="search_icon"><span class="ti-user"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Addres </label>
+                                        <input type="text" class="form-control" formControlName="addres" id="addres"  autocomplete="off">
+                                        <div class="search_icon"><span class="ti-login"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password </label>
+                                        <input type="password" class="form-control" formControlName="password" id="password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" autocomplete="off">
+                                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                            <div *ngIf="f.password.errors.required">Password is required</div>
+                                            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                                        </div>
+                                        <div class="search_icon"><span class="ti-pin"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Confirm Password </label>
+                                        <input type="password" class="form-control" formControlName="confirmPassword" id="password"  [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" autocomplete="off">
+                                        <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                                            <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                                            <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+                                        </div>
+                                        <div class="search_icon"><span class="ti-pin"></span></div>
+                                    </div>
+                                   
+                                   <div class="form-group">
+                                       
+                                        <input type="radio" id="male" name="typecandidat"  value="employer"  formControlName="typecandidat" (change)="changeGender($event)"  >
+                                        <label for="male">Demonde Embauche</label><br>
+                                        <input type="radio" id="female" name="typecandidat" value="stagaire" formControlName="typecandidat" (change)="changeGender($event)"  >
+                                        <label for="female">Demonde Stage</label><br>
+                                  
+                                    </div>
+                                      
+
+                                    <div class="form-group">
+                                        <label> Upload your cv </label>
+                                        <input type="file" class="form-control" formControlName="cv" id="fichier" 
+                                               (change)=" handleFileInput($event.target.files)" >
+                                        <div class="search_icon"><span class="ti-login"></span></div>
+                                    </div>
+                                    <div class="mrgn-30-top">
+                                        <button type="submit" class="btn btn-larger btn-block"  >Sign up</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</main>

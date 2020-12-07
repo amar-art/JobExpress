@@ -1,0 +1,158 @@
+
+ 
+        <!-- <button class="btn btn-primary"  (click)=" getAlls()">chercher</button> -->
+    
+        <!-- <table class="table table-striped">
+          <tr>
+              <th>val1 </th>  <th>val2 </th>  <th>val3 </th>  <th>val4 </th>  <th>val5 </th>  <th>val6 </th>  <th>val7 </th>
+          </tr>
+               <tr *ngFor="let c of candidat">
+                    <td>{{c.id}}</td> 
+                    <td>{{c.email}}</td> 
+                    <td>{{c.login}}</td> 
+                    <td>{{c.password}}</td> 
+                    <td>{{c.addres}}</td> 
+                    <td>{{c.nom}}</td> 
+                    <td>{{c.prenom}}</td> 
+              
+ 
+               </tr>
+ 
+        </table> -->
+        <br>   <br>
+ <div class="container"> 
+    <div class='search-box ' style="width: 300px ; margin-left: 0px; border-style: groove; ">
+
+        <input class="form-control" name="search" 
+               placeholder="Search"  [(ngModel)]="term" type="text">
+      
+      
+      </div>
+      
+        <div class="page_listing candidate espace" *ngFor="let c of candidat|candidat:term paginate: { itemsPerPage: 4, currentPage: p }">
+            <div class="sorting_content">
+               <div class="tab-image"><img src="assets/images/candidates/candidate-3.png" alt="" class="img-responsive"></div>
+                <div class="overflow">
+                   <div class="text-shorting">
+                       <h1>{{c.prenom}} {{c.nom}} </h1>
+                       <ul class="unstyled">
+                           <li>{{c.role.nomRole}}</li>
+                           <li><span><strong>Email : </strong> {{c.email}}</span></li>
+                       </ul>
+                
+                   </div>
+                <div class="bottom_text">
+                     <div class="contact_details col-md-4 col-sm-4 p-l">
+                        <span><strong>Location:</strong> {{c.addres}}</span>
+                    </div>
+                    <div class="contact_details col-md-8 col-sm-8 p-l">
+                        <span><strong>Skills:</strong>  JAVA/JEE, spring boot , Html, JavaScript, jQuery, CSS, MySQL, Angular 
+                              <button class="btn btn-primary pull-right"  [routerLink]="['/home/candidat',c.id]" >voir profil</button>
+                              <button class="btn btn-danger pull-right" (click)="deleteCandidat(c.id)">supprimer</button>
+
+                              <button type="button" class="btn btn-primary" (click)="loadCandidat(c.id,c.nom,c.prenom,c.addres,c.email,c.cv)" 
+                              (click)="openModal(template)">Update</button>  
+                                     
+                       </span>
+          <ng-template #template>
+            <div class="modal-header bg-primary text-white">
+                <h4 class="modal-title" id="modal-basic-title">Update User</h4>
+            </div>
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Modal</h4>
+            
+                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="signup" [formGroup]="candidatForm" >
+                                    
+                                    <div class="form-group">
+                                        <label>Nom</label>
+                                        <input type="text" class="form-control" formControlName="nom" id="first_name" autocomplete="off" placeholder="{{candidat1.nom}}">
+                                        <div class="search_icon"><span class="ti-user"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Prenom</label>
+                                        <input type="text" class="form-control" formControlName="prenom" id="last_name" autocomplete="off" placeholder="{{candidat1.prenom}}">
+                                        <div class="search_icon"><span class="ti-user"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Nom utilisateur </label>
+                                        <input type="text" class="form-control" formControlName="username" id="username"  autocomplete="off" placeholder="{{candidat1.login}}">
+                                        <div class="search_icon"><span class="ti-login"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>  E-mail</label>
+                                        <input type="email" class="form-control" 
+                                        name="email1" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="{{candidat1.email}}">
+                                        <div *ngIf="submitted && f.email.errors"  style="color: red;" class="invalid-feedback">
+                                          <div *ngIf="f.email.errors.required">email required</div>
+                                      </div>
+                                        <div class="search_icon"><span class="ti-user"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Addres </label>
+                                        <input type="text" class="form-control" formControlName="addres" id="addres"  autocomplete="off" placeholder="{{candidat1.addres}}">
+                                        <div class="search_icon"><span class="ti-login"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password </label>
+                                        <input type="password" class="form-control" formControlName="password" id="password"  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" autocomplete="off">
+                                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                            <div *ngIf="f.password.errors.required">Password is required</div>
+                                            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                                        </div>
+                                        <div class="search_icon"><span class="ti-pin"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Confirm Password </label>
+                                        <input type="password" class="form-control" formControlName="confirmPassword" id="password"  [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" autocomplete="off">
+                                        <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                                            <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                                            <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+                                        </div>
+                                        <div class="search_icon"><span class="ti-pin"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Upload your cv </label>
+                                        <input type="file" class="form-control" formControlName="cv" id="fichier" 
+                                               (change)=" handleFileInput($event.target.files)"  placeholder="{{candidat1.cv}}">
+                                        <div class="search_icon"><span class="ti-login"></span></div>
+                                    </div>
+                                    <div class="form-group">
+                                       
+                                        <input type="radio" id="male" name="typecandidat"  value="employer"  formControlName="typecandidat" (change)="changeGender($event)"  >
+                                        <label for="male">Demonde Embauche</label><br>
+                                        <input type="radio" id="female" name="typecandidat" value="stagaire" formControlName="typecandidat" (change)="changeGender($event)"  >
+                                        <label for="female">Demonde Stage</label><br>
+                                        <div class="search_icon"><span class="ti-pin"></span></div>
+                                    </div>
+                                    <div class="mrgn-30-top">
+                                        <button type="submit" class="btn btn-larger btn-block" (click)='addCandiat()'>Save update</button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button [disabled]="isLoading" class="btn btn-primary mr-2" (click)="modal.close('Cancel')">Cancel</button>
+                                        <button [disabled]="isLoading" class="btn btn-primary mr-2">Update</button>
+                                    </div>
+                                </form>
+              
+            </div>
+            </ng-template>
+            
+                    </div>
+      
+                    <p class="col-md-12 p-l">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                         Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                          Donec quam felis ultricies nec pellentesque eu.</p>
+                </div>
+                </div>
+            </div>
+           
+        </div>
+       
+                     
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+     <br>   <br>
